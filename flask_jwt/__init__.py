@@ -21,7 +21,7 @@ from flask import current_app, request, jsonify, _request_ctx_stack
 from flask.views import MethodView
 from werkzeug.local import LocalProxy
 
-__version__ = '0.2.0'
+__version__ = '0.2.2'
 
 current_user = LocalProxy(lambda: getattr(_request_ctx_stack.top, 'current_user', None))
 
@@ -29,14 +29,14 @@ _jwt = LocalProxy(lambda: current_app.extensions['jwt'])
 
 
 def _get_serializer():
-    expires_in = current_app.config['JWT_EXPIRATION_DELTA']
-    if isinstance(expires_in, timedelta):
-        expires_in = int(expires_in.total_seconds())
-    expires_in_total = expires_in + current_app.config['JWT_LEEWAY']
+    # expires_in = current_app.config['JWT_EXPIRATION_DELTA']
+    # if isinstance(expires_in, timedelta):
+    #     expires_in = int(expires_in.total_seconds())
+    # expires_in_total = expires_in + current_app.config['JWT_LEEWAY']
     return Serializer(
         secret_key=current_app.config['JWT_SECRET_KEY'],
-        expires_in=expires_in_total,
-        algorithm_name=current_app.config['JWT_ALGORITHM']
+        # expires_in=expires_in_total,
+        # algorithm_name=current_app.config['JWT_ALGORITHM']
     )
 
 
