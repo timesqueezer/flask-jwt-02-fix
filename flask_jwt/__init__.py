@@ -11,7 +11,8 @@ from datetime import timedelta
 from functools import wraps
 
 from itsdangerous import (
-    TimedJSONWebSignatureSerializer,
+    # TimedJSONWebSignatureSerializer,
+    URLSafeTimedSerializer as Serializer,
     SignatureExpired,
     BadSignature
 )
@@ -32,7 +33,7 @@ def _get_serializer():
     if isinstance(expires_in, timedelta):
         expires_in = int(expires_in.total_seconds())
     expires_in_total = expires_in + current_app.config['JWT_LEEWAY']
-    return TimedJSONWebSignatureSerializer(
+    return Serializer(
         secret_key=current_app.config['JWT_SECRET_KEY'],
         expires_in=expires_in_total,
         algorithm_name=current_app.config['JWT_ALGORITHM']
